@@ -1017,8 +1017,15 @@ local puzzle_input = {
     "14x6x11"
 }
 
+-- part 1
 local total_surface_area = 0
+local order_ribben = 0
+local wrap = 0
+local bow = 0
+local calc = 0
+
  for _, v in ipairs(puzzle_input) do
+
     local length = string.match(v, "%d+")
     local width = string.match(v, "x(%d+)x")
     local height = string.match(v, "x(%d+)$")
@@ -1036,6 +1043,39 @@ local total_surface_area = 0
         surface_area = surface_area + z / 2
     end
     total_surface_area = total_surface_area + surface_area
+
+-- part 2
+    wrap = (length * 2) + (width * 2)
+    bow = length * width * height
+    calc = bow + wrap
+    order_ribben = order_ribben + calc
  end
 
+--  for i = 362, 365 do
+
+--     local length = string.match(puzzle_input[i], "%d+")
+--     local width = string.match(puzzle_input[i], "x(%d+)x")
+--     local height = string.match(puzzle_input[i], "x(%d+)$")
+
+--     local x = 2 * length * width 
+--     local y = 2 * width * height 
+--     local z = 2 * height * length 
+
+--     local surface_area = x + y + z
+--     if x <= y and x <= z then
+--         surface_area = surface_area + x / 2
+--     elseif y <= x and y <= z then
+--         surface_area = surface_area + y / 2
+--     else
+--         surface_area = surface_area + z / 2
+--     end
+--     total_surface_area = total_surface_area + surface_area
+
+-- -- part 2
+--     bow = length * width * height
+--     calc = bow + wrap
+--     order_ribben = order_ribben + calc
+--  end
+
 print(total_surface_area)
+print(order_ribben)
