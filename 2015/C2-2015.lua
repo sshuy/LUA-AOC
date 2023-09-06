@@ -1016,23 +1016,22 @@ local puzzle_input = {
     "24x25x17",
     "14x6x11"
 }
-
 -- part 1
-local total_surface_area = 0
-local order_ribben = 0
-local wrap = 0
-local bow = 0
-local calc = 0
+local total_surface_area = nil
+local order_ribben = nil
 
- for _, v in ipairs(puzzle_input) do
-
+for _, v in ipairs(puzzle_input) do
     local length = string.match(v, "%d+")
     local width = string.match(v, "x(%d+)x")
     local height = string.match(v, "x(%d+)$")
+    length = tonumber(length)
+    width = tonumber(width)
+    height = tonumber(height)
 
-    local x = 2 * length * width 
-    local y = 2 * width * height 
-    local z = 2 * height * length 
+
+    local x = 2 * length * width
+    local y = 2 * width * height
+    local z = 2 * height * length
 
     local surface_area = x + y + z
     if x <= y and x <= z then
@@ -1044,38 +1043,19 @@ local calc = 0
     end
     total_surface_area = total_surface_area + surface_area
 
--- part 2
-    wrap = (length * 2) + (width * 2)
-    bow = length * width * height
-    calc = bow + wrap
+    -- part 2
+    local wrap = nil
+    if length <= height and width <= height then
+        wrap = (length * 2) + (width * 2)
+    elseif length <= width and height <= width then
+        wrap = (length * 2) + (height * 2)
+    else
+        wrap = (width * 2) + (height * 2)
+    end
+    local bow = length * width * height
+    local calc = bow + wrap
     order_ribben = order_ribben + calc
- end
-
---  for i = 362, 365 do
-
---     local length = string.match(puzzle_input[i], "%d+")
---     local width = string.match(puzzle_input[i], "x(%d+)x")
---     local height = string.match(puzzle_input[i], "x(%d+)$")
-
---     local x = 2 * length * width 
---     local y = 2 * width * height 
---     local z = 2 * height * length 
-
---     local surface_area = x + y + z
---     if x <= y and x <= z then
---         surface_area = surface_area + x / 2
---     elseif y <= x and y <= z then
---         surface_area = surface_area + y / 2
---     else
---         surface_area = surface_area + z / 2
---     end
---     total_surface_area = total_surface_area + surface_area
-
--- -- part 2
---     bow = length * width * height
---     calc = bow + wrap
---     order_ribben = order_ribben + calc
---  end
+end
 
 print(total_surface_area)
 print(order_ribben)
